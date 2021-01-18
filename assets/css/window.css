@@ -1,0 +1,41 @@
+
+.window {
+    width: 40vw;
+    height: 40vh;
+
+    position: absolute;
+    padding: 0;
+
+    background-color: black;
+    border: 1px solid white;
+}
+
+.window-content {
+    padding: 10px;
+}
+
+/*
+Window Bar
+
+The top white bar on the window including the title, close, minimize, and enlarge buttons.
+*/
+
+.window-bar {
+    height: 30px;
+
+    color: black;
+    background: white;
+    text-align: center;
+
+    width: 100%;
+}
+
+.window-bar a {
+    margin-left: 5px;
+    color: black;
+}
+
+.window-bar p {
+    margin: 0;
+    margin-left: 10px;
+}
