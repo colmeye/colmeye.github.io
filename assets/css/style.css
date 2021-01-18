@@ -1,9 +1,15 @@
 
 body {
+    width: 100vw;
     height: 100vh;
-
-    background-color: black;
+    max-width: 100vw;
+    max-height: 100vh;
+    
+    
+    overflow:hidden;
+    background-image: url(../../images/bg.png);
+    background-color: purple;
     color: white;
 
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: 'Ubuntu', sans-serif;
 }

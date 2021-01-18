@@ -1,41 +1,165 @@
 
 .window {
-    width: 40vw;
-    height: 40vh;
+    width: 50em;
+    height: 25em;
+    min-width: 375px;
+    max-width: 100vw;
+    max-height: 100vh;
 
     position: absolute;
     padding: 0;
 
-    background-color: black;
-    border: 1px solid white;
-}
-
-.window-content {
-    padding: 10px;
+    background-color: rgb(48, 10, 36);
+    border: 1px solid rgb(41, 32, 35);
+    border-radius: 5px;
 }
 
 /*
 Window Bar
-
+---------------
 The top white bar on the window including the title, close, minimize, and enlarge buttons.
 */
 
 .window-bar {
-    height: 30px;
-
-    color: black;
-    background: white;
-    text-align: center;
-
     width: 100%;
+    height: 2.5em;
+
+    color: white;
+    font-weight: bold;
+    background: rgb(44, 44, 44);
+    border-top: 1px solid rgb(58, 58, 58);
+    border-bottom: 1px solid rgb(37, 37, 37);
+    border-radius: 5px 5px 0 0;
 }
 
-.window-bar a {
-    margin-left: 5px;
-    color: black;
+.window-bar span {
+    display: flex;
+    align-items: center;
+    padding: 0 .7em 0 0.7em;
 }
 
 .window-bar p {
     margin: 0;
     margin-left: 10px;
 }
+
+/*
+Window content
+*/
+
+.window-content {
+    /* Subtract height of the window top bar */
+    height: calc(100% - 2.5em);
+
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+pre {
+    overflow-x: hidden;
+}
+
+
+/*
+Text input
+------------
+*/
+
+#text-area {
+    height: calc(100% - 2em);
+}
+
+.input-log {
+    margin: 0;
+    line-height: 1em;
+}
+
+#user-input {
+    display: inline-block;
+
+    width: 90%;
+    height: 1.5em;
+    
+    padding: 0 0 0 0.1em;
+    margin: 0;
+
+    background: black;
+    border: 0;
+    outline: none;
+
+    color: #7edc9d;
+    text-shadow: 1px 1px 3px #7edc9d;
+}
+
+#input-area {
+    height: 2em;
+}
+
+#user {
+    font-weight: bold;
+    color: rgb(78, 154, 7)
+}
+
+#cmd {
+    height: 1.5em;
+    width: auto;
+    display: inline-block;
+
+    margin-left: 0.7em;
+
+    background: transparent;
+    color: white;
+    padding: 0;
+    overflow: hidden;
+}
+
+#cmd span {
+    float: left;
+    white-space: pre;
+}
+
+/* The blinking rectangle */
+#cursor {
+    width: 0.5em;
+    height: 1.25em;
+
+    margin-left: 0.1em;
+
+    float: left;
+    background: white;
+}
+
+/* Hide the actual input */
+input {
+    width: 0;
+    height: 0;
+    
+    opacity: 0;
+}
+
+
+/*
+Custom Scrollbar
+------------------
+*/
+
+/* width */
+::-webkit-scrollbar {
+    width: 0.4em;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    border-radius: 10px;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgb(173, 173, 173); 
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background:  rgb(130, 130, 130);
+  }
