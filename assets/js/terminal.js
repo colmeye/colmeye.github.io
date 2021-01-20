@@ -21,7 +21,8 @@ class Cmd
 
             // Make windows draggable. MUST BE LAST
             $( this.window ).draggable({
-                containment: "#desktop"
+                containment: "#desktop",
+                scroll: false,
             }).resizable({
                 minWidth: 300,
                 minHeight: 300,
