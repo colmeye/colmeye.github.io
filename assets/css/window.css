@@ -1,4 +1,6 @@
 
+
+
 .window {
     width: 50em;
     height: 25em;
@@ -36,6 +38,10 @@ The top white bar on the window including the title, close, minimize, and enlarg
     display: flex;
     align-items: center;
     padding: 0 .7em 0 0.7em;
+}
+
+.window-bar span:hover {
+    background: rgb(37, 37, 37);
 }
 
 .window-bar p {

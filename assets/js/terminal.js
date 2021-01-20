@@ -1,22 +1,37 @@
 class Cmd
 {
-
+    
     constructor()
     {
+        // Set vars
         this.cursor = "";
-
+        this.window = ".window";
+        
+        // Activate the terminal
         this.activateTerminal();
 
+        // Run constantly
         $( () =>
         {
+            // Focus on window
             this.focusOnClick();
+
+            // Listen for keyboard input
             this.inputListener();
+
+            // Make windows draggable. MUST BE LAST
+            $( this.window ).draggable({
+                containment: "#desktop"
+            }).resizable({
+                minWidth: 300,
+                minHeight: 300,
+            });
         });
     }
 
     
     /*
-    Focus on CMD
+    Focus on Terminal
     ---------------
     This code focuses on the input no matter what
     */
@@ -32,13 +47,13 @@ class Cmd
             if ($('#cursor').css('visibility') === 'visible')
             {
                 $('#cursor').css({
-                visibility: 'hidden'
+                    visibility: 'hidden'
                 });
             }
             else 
             {
                 $('#cursor').css({
-                visibility: 'visible'
+                    visibility: 'visible'
                 });
             }
         }, 500);
@@ -53,20 +68,10 @@ class Cmd
     // Refocus on terminal when clicking on the window
     focusOnClick()
     {
-
-        $("#terminal").on("click", () =>
+        $( this.window ).on("click", () =>
         {
             this.activateTerminal();
         });
-        
-        /*
-        $('input').on('focusout', () =>
-        {
-            this.activateTerminal();
-        });
-        */
-
-        
     }
 
 
@@ -78,7 +83,6 @@ class Cmd
 
     inputListener()
     {
-
         // Changes the input on user input
         $('input').on('input', () =>
         {
@@ -92,9 +96,7 @@ class Cmd
             visibility: 'visible'
             });
         });
-
     }
-    
 
 }
 

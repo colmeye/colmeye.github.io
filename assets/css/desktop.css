@@ -1,3 +1,8 @@
+/*
+Taskbar
+--------
+*/
+
 #taskbar {
     width: 5em;
     height: 100vh;
@@ -13,4 +18,16 @@
     z-index: 101;
 
     border: 2px solid white;
+}
+
+/*
+Desktop
+--------
+*/
+
+#desktop {
+    width: calc(100vw - 5em);
+    height: 100%;
+
+    padding: 0;
 }
