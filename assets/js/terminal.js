@@ -1,12 +1,15 @@
-class Cmd
+class Terminal
 {
     
     constructor()
     {
         // Set vars
         this.cursor = "";
+        this.input = "#terminalInput";
+        this.contentArea = "#input-log";
         this.window = ".window";
-        
+
+
         // Activate the terminal
         this.activateTerminal();
 
@@ -17,7 +20,7 @@ class Cmd
             this.focusOnClick();
 
             // Listen for keyboard input
-            this.inputListener();
+            this.inputHandler();
 
             // Make windows draggable. MUST BE LAST
             $( this.window ).draggable({
@@ -40,7 +43,7 @@ class Cmd
     activateTerminal()
     {
         // Focus on the input
-        $('input').focus();
+        $(this.input).focus();
 
         // Make the cursor blink
         this.cursor = window.setInterval( () =>
@@ -62,7 +65,7 @@ class Cmd
         // Refocus on the input after each keypress
         $('#cmd').keypress( () =>
         {
-            $('input').focus();
+            $(this.input).focus();
         });
     }
 
@@ -77,28 +80,54 @@ class Cmd
 
 
     /*
-    Input updating
+    Input handling
     ----------------
-    Add the typed text to the element storing it
+    Listen for keyboard inputs. This includes typing and entering
     */
 
-    inputListener()
+    inputHandler()
     {
         // Changes the input on user input
-        $('input').on('input', () =>
+        $(this.input).on('input', () =>
         {
-            $('#cmd span').text($('input').val());
+            $('#cmd span').text( $(this.input).val() );
         });
         
-        $('input').blur( () =>
+        $(this.input).blur( () =>
         {
             clearInterval(this.cursor);
             $('#cursor').css({
-            visibility: 'visible'
+                visibility: 'visible'
             });
+        });
+
+        $(this.input).on('keypress', (_key) =>
+        {
+            if (_key.which == 13)
+            {
+                this.insertInput();
+            }
         });
     }
 
+    /*
+    Submission
+    ------------
+    */
+
+    insertInput()
+    {
+        // Append input to terminal
+        $(this.contentArea).append( $( "<span id='user'>CM@portfolio</span><span>:<b style='color:rgb(51, 93, 158);'>~</b>$</span><span> " + $(this.input).val()+ "</span><br>" ) );
+        // Scroll to latest input
+        $(this.contentArea).scrollTop($(this.contentArea).prop("scrollHeight"));
+        // Clear input
+        $("input").val("");
+        $('#cmd span').text("");
+    }
+
+        
+
 }
 
-var cmd = new Cmd();
+var terminal = new Terminal();

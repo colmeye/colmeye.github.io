@@ -54,11 +54,10 @@ Window content
 */
 
 .window-content {
-    /* Subtract height of the window top bar */
+    /* Subtract height of the window TOP BAR */
     height: calc(100% - 2.5em);
 
     overflow-x: hidden;
-    overflow-y: scroll;
 }
 
 pre {
@@ -71,20 +70,24 @@ Text input
 ------------
 */
 
-#text-area {
-    height: calc(100% - 2em);
-}
 
-.input-log {
+#input-log {
+    /* Subtract height of INPUT AREA */
+    height: calc(100% - 1.6em);
+    overflow-y: scroll;
+    
     margin: 0;
     line-height: 1em;
 }
 
-#user-input {
-    display: inline-block;
+#input-area {
+    height: 1.6em;
+}
 
+#user-input {
     width: 90%;
     height: 1.5em;
+    display: inline-block;
     
     padding: 0 0 0 0.1em;
     margin: 0;
@@ -95,15 +98,6 @@ Text input
 
     color: #7edc9d;
     text-shadow: 1px 1px 3px #7edc9d;
-}
-
-#input-area {
-    height: 2em;
-}
-
-#user {
-    font-weight: bold;
-    color: rgb(78, 154, 7)
 }
 
 #cmd {
@@ -117,6 +111,11 @@ Text input
     color: white;
     padding: 0;
     overflow: hidden;
+}
+
+#user {
+    font-weight: bold;
+    color: rgb(78, 154, 7)
 }
 
 #cmd span {
