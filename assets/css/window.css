@@ -77,7 +77,7 @@ Text input
     overflow-y: scroll;
     
     margin: 0;
-    line-height: 1em;
+    line-height: 1.3em;
 }
 
 #input-area {

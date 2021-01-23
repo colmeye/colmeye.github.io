@@ -103,29 +103,44 @@ class Terminal
 
         $(this.input).on('keypress', (_key) =>
         {
-            if (_key.which == 13)
+            if (_key.which == 13) // If enter pressed
             {
-                this.insertInput();
+                var inputValue = $(this.input).val();
+
+                this.printLine( "<span id='user'>CM@portfolio</span><span>:<b style='color:rgb(51, 93, 158);'>~</b>$</span> " + inputValue );
+                this.runCommand( inputValue );
+                this.clearInput();
             }
         });
     }
 
     /*
-    Submission
+    Terminal input functions
     ------------
     */
 
-    insertInput()
+    
+    printLine(_stringVal)
     {
         // Append input to terminal
-        $(this.contentArea).append( $( "<span id='user'>CM@portfolio</span><span>:<b style='color:rgb(51, 93, 158);'>~</b>$</span><span> " + $(this.input).val()+ "</span><br>" ) );
+        $(this.contentArea).append( "<span>" + _stringVal + "</span><br>" );
         // Scroll to latest input
-        $(this.contentArea).scrollTop($(this.contentArea).prop("scrollHeight"));
-        // Clear input
-        $("input").val("");
-        $('#cmd span').text("");
+        $(this.contentArea).scrollTop( $(this.contentArea).prop("scrollHeight") );
     }
 
+    runCommand(_inputVal)
+    {
+        if (_inputVal === "test")
+        {
+            this.printLine("test was ran");
+        }
+    }
+
+    clearInput()
+    {
+        $(this.input).val("");
+        $('#cmd span').text("");
+    }
         
 
 }
