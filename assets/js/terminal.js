@@ -114,12 +114,14 @@ class Terminal
         });
     }
 
+    
     /*
-    Terminal input functions
-    ------------
+    Terminal Functions
+    --------------------
+    These functions have to do with submitting input to the terminal and processing it.
     */
 
-    
+    // Add line to the content area in terminal
     printLine(_stringVal)
     {
         // Append input to terminal
@@ -128,21 +130,87 @@ class Terminal
         $(this.contentArea).scrollTop( $(this.contentArea).prop("scrollHeight") );
     }
 
-    runCommand(_inputVal)
+    printLines(_stringVal)
     {
-        if (_inputVal === "test")
-        {
-            this.printLine("test was ran");
-        }
+        // Append input to terminal
+        $(this.contentArea).append( "<pre>" + _stringVal + "</pre><br>" );
+        // Scroll to latest input
+        $(this.contentArea).scrollTop( $(this.contentArea).prop("scrollHeight") );
     }
 
+    // Empty the input
     clearInput()
     {
         $(this.input).val("");
         $('#cmd span').text("");
     }
+
+    // Run the commands
+    runCommand(_inputVal)
+    {
+        // Divide input by spaces
+        var _inputArray = _inputVal.split(" ");
         
+        // Make following words into arguments
+        var _inputArrayArgs = [];
+        for (var i = 1; i < _inputArray.length; i++)
+        {
+            _inputArrayArgs.push( _inputArray[i] )
+        }
+
+        // Check if the first input word of _inputArray is a function inside our literal object :)
+        if ( $.isFunction( commands[ _inputArray[0] ] ) )
+        {
+            // Run the first part of input, pass rest as args
+            // Passing "this" as first arg allows the literal object to use "Terminal" class functions!
+            commands[ _inputArray[0] ](this, _inputArrayArgs);
+        }
+        else
+        {
+            // Command was not found
+            this.printLine('"' + _inputArray[0] + '" is not a command.');
+        }
+        
+    }
+
+
 
 }
+
+
+
+/*
+Command Literal Object
+------------------------
+This object stores all the commands that the terminal can run
+*/
+
+commands = {
+    
+    help: function(_this)
+    {
+        _this.printLine("Help Menu");
+    },
+
+    cd: function(_this, _args)
+    {
+        if ( checkArgs(_args, 1) )
+        {
+            _this.printLine("test");
+        }
+    },
+
+    checkArgs: function(_args, _minAmount)
+    {
+
+        if (_args.length > _minAmount)
+        {
+            return true;
+        }
+        
+    }
+
+}
+
 
 var terminal = new Terminal();
