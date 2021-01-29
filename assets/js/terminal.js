@@ -9,27 +9,18 @@ class Terminal
         this.contentArea = "#input-log";
         this.window = ".window";
 
-
+        
         // Activate the terminal
         this.activateTerminal();
 
         // Run constantly
         $( () =>
         {
-            // Focus on window
+            // Activate terminal on click
             this.focusOnClick();
 
             // Listen for keyboard input
             this.inputHandler();
-
-            // Make windows draggable. MUST BE LAST
-            $( this.window ).draggable({
-                containment: "#desktop",
-                scroll: false,
-            }).resizable({
-                minWidth: 300,
-                minHeight: 300,
-            });
         });
     }
 
@@ -175,6 +166,52 @@ class Terminal
 
 
 
+    /*
+    Terminal Content
+    */
+
+    createWindowContent()
+    {
+        var _html = `
+            <div class='container h-100'>
+                <div class='row h-100'>
+                    <div class='col p-1 h-100'>
+                        
+                        <div id='input-log'>
+<pre>
+   ______        __ __ _           __  ___                        
+  / ____/____   / // /(_)____     /  |/  /___   __  __ ___   _____
+ / /    / __ \ / // // // __ \   / /|_/ // _ \ / / / // _ \ / ___/
+/ /___ / /_/ // // // // / / /  / /  / //  __// /_/ //  __// /    
+\____/ \____//_//_//_//_/ /_/  /_/  /_/ \___/ \__, / \___//_/     
+                                             /____/                            
+</pre>
+                            <p>Welcome to Collin Meyer's portfolio site. You can click icons on the &ldquo;desktop&rdquo; to learn more about me. You can also use this terminal. Type help for more commands.</p>
+                        </div>
+
+                        <div id='input-area' class='d-flex align-items-end'>
+    
+    
+                            <!-- INPUT AREA -->
+                            <span id='user'>CM@portfolio</span><span>:<b style='color:rgb(51, 93, 158);'>~</b>$</span>
+                            <div id='cmd'>
+                                <span id='written-text'></span>
+                                <div id='cursor'></div>
+                            </div>
+                            
+                            <input id="terminalInput" type='text' name='command' value='' autofocus>
+    
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `
+
+        return _html;
+    }
+
+
+
 }
 
 
@@ -211,6 +248,3 @@ commands = {
     }
 
 }
-
-
-var terminal = new Terminal();

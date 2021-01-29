@@ -24,6 +24,13 @@
         <link rel="stylesheet" href="assets/jQuery/jquery-ui-1.12.1/jquery-ui.min.css">
         <script src="assets/js/terminal.js"></script>
         <script src="assets/js/window.js"></script>
+
+        <script>
+            //terminal = new Terminal("#terminal");
+            //terminal.setTitle("Terminal");
+
+            test = new Window("#testwindow");
+        </script>
         
 
     </head>
@@ -39,67 +46,12 @@
                 </div>
 
                 <div id="desktop">
-                    <div id='terminal' class='window'>
 
-                        <!-- Top bar -->
-                        <div class='window-bar'>
+                    <div id="testwindow"></div>
                     
-                            <div class='row h-100'>
-                                <!-- Left Placeholder -->
-                                <div class='col'>
-                    
-                                </div>
-                                <!-- Title -->
-                                <div class='col h-100 d-flex justify-content-center align-items-center'>
-                                    <p>CM@portfolio:~</p>
-                                </div>
-                                <!-- Buttons -->
-                                <div class='col h-100 d-flex justify-content-end'>
-                                    <span><i class='fas fa-minus fa-xs'></i></span>
-                                    <span><i class='far fa-square fa-xs'></i></span>
-                                    <span><i class='fas fa-times-circle' style='color: rgb(223, 74, 22);'></i></span>
-                                </div>
-                            </div>
-                        
-                        </div>
-                    
-                        <!-- Content -->
-                        <div class='window-content'>
-                    
-                            <div class='container h-100'>
-                                <div class='row h-100'>
-                                    <div class='col p-1 h-100'>
-                                        
-                                        <div id='input-log'>
-<pre>
-   ______        __ __ _           __  ___                        
-  / ____/____   / // /(_)____     /  |/  /___   __  __ ___   _____
- / /    / __ \ / // // // __ \   / /|_/ // _ \ / / / // _ \ / ___/
-/ /___ / /_/ // // // // / / /  / /  / //  __// /_/ //  __// /    
-\____/ \____//_//_//_//_/ /_/  /_/  /_/ \___/ \__, / \___//_/     
-                                             /____/                            
-</pre>
-                                            <p>Welcome to Collin Meyer's portfolio site. You can click icons on the &ldquo;desktop&rdquo; to learn more about me. You can also use this terminal. Type help for more commands.</p>
-                                        </div>
 
-                                        <div id='input-area' class='d-flex align-items-end'>
-                    
-                    
-                                            <!-- INPUT AREA -->
-                                            <span id='user'>CM@portfolio</span><span>:<b style='color:rgb(51, 93, 158);'>~</b>$</span>
-                                            <div id='cmd'>
-                                                <span id='written-text'></span>
-                                                <div id='cursor'></div>
-                                            </div>
-                                            
-                                            <input id="terminalInput" type='text' name='command' value='' autofocus>
-                    
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> <!-- /#terminal -->
+                    <div id='terminal'></div>
+
                 </div> <!-- /#desktop -->
 
             </div> <!-- /.row -->
