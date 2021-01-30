@@ -14,6 +14,9 @@ class Window
         this.windowTitle = "Window Title";
         this.windowContent = "Window Content";
 
+        // Container that windows can't be dragged out of
+        this.containment = "body";
+        
         
         // Run constantly
         $( () =>
@@ -23,14 +26,19 @@ class Window
             $(this.window).html( this.drawWindow() );
 
             // Focus on window
-            this.focusOnClick();
+            this.bringToFrontOnClick();
 
             // Make windows draggable. MUST BE LAST
             this.dragAndResize();
         });
     }
 
-    // Sets the window title
+
+    /*
+    Setters
+    --------
+    */
+    
     setTitle(_title)
     {
         this.windowTitle = _title;
@@ -41,6 +49,16 @@ class Window
         this.windowContent = _content;
     }
 
+    setContainment(_containment)
+    {
+        this.containment = _containment;
+    }
+
+
+    /*
+    Draw Window
+    ------------
+    */
 
     drawWindow()
     {
@@ -77,11 +95,16 @@ class Window
         return _html;
     }
 
+    
+    /*
+    Responsive Features
+    --------------------
+    */
 
-    dragAndResize()
+    dragAndResize(_containment)
     {
         $( this.window ).draggable({
-            containment: "#desktop",
+            containment: this.containment,
             scroll: false,
         }).resizable({
             minWidth: 300,
@@ -90,7 +113,7 @@ class Window
     }
 
     // Bring the clicked on window to the front of all windows!
-    focusOnClick()
+    bringToFrontOnClick()
     {
         $( this.window ).on("click", () =>
         {
@@ -99,7 +122,7 @@ class Window
         });
     }
 
-
+    // Close the window
     closeWindow()
     {
         $(this.window).css("visible", "false");

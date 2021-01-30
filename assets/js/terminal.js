@@ -1,16 +1,19 @@
-class Terminal
+class Terminal extends Window
 {
     
-    constructor()
+    constructor(_windowId)
     {
-        // Set vars
+        super(_windowId);
+        // Draw the terminal in the window!
+        this.setContent( this.createWindowContent() );
+        
+        // Terminal Vars
         this.cursor = "";
         this.input = "#terminalInput";
         this.contentArea = "#input-log";
-        this.window = ".window";
 
         
-        // Activate the terminal
+        // Activate the terminal on load
         this.activateTerminal();
 
         // Run constantly
