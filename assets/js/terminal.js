@@ -1,17 +1,22 @@
-class Terminal extends Window
+/*
+Terminal Class
+--------
+*/
+
+class Terminal extends WindowSetup
 {
     
     constructor(_windowId)
     {
         super(_windowId);
         // Draw the terminal in the window!
+        this.inputLine = "<span id='user'>user@machine</span><span>:<b style='color:rgb(51, 93, 158);'>~</b>$</span> ";
         this.setContent( this.createWindowContent() );
         
         // Terminal Vars
         this.cursor = "";
         this.input = "#terminalInput";
         this.contentArea = "#input-log";
-
         
         // Activate the terminal on load
         this.activateTerminal();
@@ -24,6 +29,9 @@ class Terminal extends Window
 
             // Listen for keyboard input
             this.inputHandler();
+
+            // Make windows draggable. MUST BE LAST
+            this.dragAndResize();
         });
     }
 
@@ -101,7 +109,7 @@ class Terminal extends Window
             {
                 var inputValue = $(this.input).val();
 
-                this.printLine( "<span id='user'>CM@portfolio</span><span>:<b style='color:rgb(51, 93, 158);'>~</b>$</span> " + inputValue );
+                this.printLine( this.inputLine + inputValue );
                 this.runCommand( inputValue );
                 this.clearInput();
             }
@@ -196,7 +204,7 @@ class Terminal extends Window
     
     
                             <!-- INPUT AREA -->
-                            <span id='user'>CM@portfolio</span><span>:<b style='color:rgb(51, 93, 158);'>~</b>$</span>
+                            ` + this.inputLine + `
                             <div id='cmd'>
                                 <span id='written-text'></span>
                                 <div id='cursor'></div>
