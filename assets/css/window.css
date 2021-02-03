@@ -1,3 +1,8 @@
+/*
+Window
+--------
+*/
+
 .window {
     width: 50em;
     height: 25em;
@@ -5,13 +10,11 @@
     max-width: 100vw;
     max-height: 100vh;
 
-    position: absolute;
-    padding: 0;
-
     background-color: rgb(48, 10, 36);
     border: 1px solid rgb(41, 32, 35);
     border-radius: 5px;
 }
+
 
 /*
 Window Bar
@@ -46,6 +49,7 @@ The top white bar on the window including the title, close, minimize, and enlarg
     margin-left: 10px;
 }
 
+
 /*
 Window content
 */
@@ -53,11 +57,10 @@ Window content
 .window-content {
     /* Subtract height of the window TOP BAR */
     height: calc(100% - 2.5em);
-
     overflow-x: hidden;
 }
 
-pre {
+.window pre {
     overflow-x: hidden;
 }
 
@@ -66,7 +69,6 @@ pre {
 Text input
 ------------
 */
-
 
 #input-log {
     /* Subtract height of INPUT AREA */
@@ -148,20 +150,20 @@ Custom Scrollbar
 /* width */
 ::-webkit-scrollbar {
     width: 0.4em;
-  }
+}
   
-  /* Track */
-  ::-webkit-scrollbar-track {
+/* Track */
+::-webkit-scrollbar-track {
     border-radius: 10px;
-  }
-   
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
     background: rgb(173, 173, 173); 
     border-radius: 10px;
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
     background:  rgb(130, 130, 130);
-  }
+}

@@ -8,6 +8,7 @@ WindowSetup Class
 class WindowSetup
 {
 
+
     constructor(_windowId)
     {
         this.window = _windowId;
@@ -16,22 +17,29 @@ class WindowSetup
         this.windowTitle = "Window Title";
         this.windowContent = "Window Content";
 
-        // Window sizing
+        // Initial window sizing
         this.minWidth = 300;
         this.minHeight = 200;
         this.width = "50em";
         this.height = "25em";
-        this.fullScreen = false;
 
-        // Container that windows can't be dragged out of
+        // Fullscreen swapping 
+        this.fullScreen = false;
+        this.lastX = 0;
+        this.lastY = 0;
+        this.lastWidth = "50em";
+        this.lastHeight = "25em";
+
+        // Containment that windows can't be dragged out of
         this.containment = "body";
-        
+        $(this.containment).css("position", "relative");
 
         // Run constantly
         $( () =>
         {
             // Insert "dynamic" HTML and CSS into the window
             $(this.window).addClass("window");
+            $(this.window).css("position", "absolute"); // Must add this in js because jQuery UI overwrites with position:relative
             $(this.window).html( this.drawWindow() );
 
             // Minimize, toggle, close
@@ -76,7 +84,6 @@ class WindowSetup
 
     drawWindow()
     {
-        
         var _html = `
             <!-- Window bar -->
             <div class='window-bar'>
@@ -136,9 +143,15 @@ class WindowSetup
     // Bring the clicked on window to the front of all windows!
     bringToFront()
     {
-            $('.window').css("z-index", "1");
-            $(this.window).css("z-index", "2");
+        $('.window').css("z-index", "1");
+        $(this.window).css("z-index", "2");
     }
+
+
+    /*
+    Title Bar Functions
+    --------------------
+    */
 
     // Close the window
     titleBarFunctions()
@@ -152,28 +165,49 @@ class WindowSetup
         // Toggle window size
         $(this.window + " #window-toggle").on('click', () =>
         {
+            $(this.window).css("transition", "0.3s");
+
             switch (this.fullScreen)
             {
                 case false:
-                    // Make fullscreen if not
+                    // FULLSCREEN
+                    // Store the size and position vars
+                    this.lastX = $(this.window).css("left");
+                    this.lastY = $(this.window).css("top");
+                    this.lastWidth = $(this.window).css("width");
+                    this.lastHeight = $(this.window).css("height");
+                    // Make the window fullscreen
                     $(this.window).css("left", "0");
                     $(this.window).css("top", "0");
                     $(this.window).css("width", "100%");
                     $(this.window).css("height", "100%");
+                    $(this.window).css("position", "relative");
+                    // Remove border
+                    $(this.window).css("border", "0");
+                    $(this.window).css("border-radius", "0");
+                    $(this.window + " .window-bar").css("border-radius", "0");
+                    // Change this var
                     this.fullScreen = true;
                     break;
                 case true:
-                    // Make not fullscreen if it is
-                    $(this.window).css("left", "0");
-                    $(this.window).css("top", "0");
-                    $(this.window).css("width", this.width);
-                    $(this.window).css("height", this.height);
+                    // WINDOWED
+                    // Make the window windowed and set to last pos and size
+                    $(this.window).css("left", this.lastX);
+                    $(this.window).css("top", this.lastY);
+                    $(this.window).css("width", this.lastWidth);
+                    $(this.window).css("height", this.lastHeight);
+                    $(this.window).css("position", "absolute");
+                    // Add the border back
+                    $(this.window).css("border", "1px solid rgb(41, 32, 35)");
+                    $(this.window + " .window-bar").css("border-radius", "5px");
+                    $(this.window).css("border-radius", "5px");
+                    
+                    // Change this var
                     this.fullScreen = false;
                     break;
             }
-
         });
-
+        
         // Minimize window
         $(this.window + " #window-minimize").on('click', () =>
         {
@@ -182,12 +216,15 @@ class WindowSetup
 
             // Shrink and disappear
             $(this.window).css("opacity", "0");
+            $(this.window).css("height", "100");
             
             // Move to bottom
             $(this.window).css("z-index", "0");
         });
         
     }
+
+
 }
 
 
