@@ -29,6 +29,10 @@ class WindowSetup
         this.lastY = 0;
         this.lastWidth = "50em";
         this.lastHeight = "25em";
+        this.transitionTime = 0.3;
+
+        // Launcher
+        this.launcher = "body";
 
         // Containment that windows can't be dragged out of
         this.containment = "body";
@@ -74,6 +78,11 @@ class WindowSetup
     setContainment(_containment)
     {
         this.containment = _containment;
+    }
+
+    setLauncher(_launcher)
+    {
+        this.launcher = _launcher;
     }
 
 
@@ -165,7 +174,9 @@ class WindowSetup
         // Toggle window size
         $(this.window + " #window-toggle").on('click', () =>
         {
-            $(this.window).css("transition", "0.3s");
+            // Up the transition speed, and reset it back to zero for smooth dragging
+            $(this.window).css("transition", String(this.transitionTime) + "s");
+            setTimeout( () => { $(this.window).css("transition", "0s"); }, (this.transitionTime * 100) );
 
             switch (this.fullScreen)
             {
@@ -196,12 +207,10 @@ class WindowSetup
                     $(this.window).css("top", this.lastY);
                     $(this.window).css("width", this.lastWidth);
                     $(this.window).css("height", this.lastHeight);
-                    $(this.window).css("position", "absolute");
                     // Add the border back
                     $(this.window).css("border", "1px solid rgb(41, 32, 35)");
                     $(this.window + " .window-bar").css("border-radius", "5px");
                     $(this.window).css("border-radius", "5px");
-                    
                     // Change this var
                     this.fullScreen = false;
                     break;
@@ -212,7 +221,7 @@ class WindowSetup
         $(this.window + " #window-minimize").on('click', () =>
         {
             // Up the transition speed
-            $(this.window).css("transition", "0.3s");
+            $(this.window).css("transition", String(this.transitionTime) + "s");
 
             // Shrink and disappear
             $(this.window).css("opacity", "0");
