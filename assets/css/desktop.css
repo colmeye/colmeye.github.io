@@ -1,4 +1,17 @@
 /*
+Top Bar
+--------
+*/
+
+#top-panel {
+    height: 1.7em;
+
+    background: black;
+    opacity: 80%;
+}
+
+
+/*
 Taskbar
 --------
 */
@@ -40,26 +53,13 @@ Taskbar
 
 
 /*
-Top Bar
---------
-*/
-
-#top-panel {
-    height: 1.7em;
-
-    background: black;
-    opacity: 80%;
-}
-
-
-/*
 Desktop
 --------
 */
 
 #desktop {
     width: calc(100vw - 5em);
-    height: 100%;
+    height: calc(100vh - 1.7em);
 
     padding: 0;
 }
