@@ -49,13 +49,19 @@
                         <div class="col">
                             <p>Activities</p>
                         </div>
-                        <div class="col">
-                            Oct 10
+                        <div class="col text-center">
+                            <p id="date-time"></p>
                         </div>
-                        <div class="col">
-                            <i class="fas fa-wifi"></i>
-                            <i class="fas fa-volume-off"></i>
-                            <i class="fas fa-power-off"></i>
+                        <div class="col d-flex justify-content-end">
+                            <div class="panel-button">
+                                <i class="fas fa-wifi"></i>
+                            </div>
+                            <div class="panel-button">
+                                <i class="fas fa-volume-off"></i>
+                            </div>
+                            <div class="panel-button">
+                                <i class="fas fa-power-off"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -71,7 +77,7 @@
 
                 <div id="desktop">
 
-                    <div id="testwindow"></div>
+                    <!--<div id="testwindow"></div>-->
 
                     <div id='terminal'></div>
 
@@ -81,4 +87,21 @@
         </div> <!-- /.container-fluid -->
 
     </body>
+
+    <script>
+        var now = new Date(Date.now());
+
+        // Get day of the week
+        var day = now.getDate();
+
+        // Get shortened month
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        var month = monthNames[now.getMonth()];
+
+        // Get hours and minutes
+        var formatted = now.getHours() + ":" + now.getMinutes();
+
+        // Combine them
+        $('#date-time').html(day + '&nbsp;' + month + '&nbsp;&nbsp;&nbsp;' +formatted);
+    </script>
 </html>

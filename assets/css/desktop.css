@@ -7,9 +7,12 @@ Top Bar
     height: 1.7em;
 
     background: black;
-    opacity: 80%;
+    opacity: 75%;
 }
 
+#top-panel .panel-button {
+    padding: 0 0.5em;
+}
 
 /*
 Taskbar
