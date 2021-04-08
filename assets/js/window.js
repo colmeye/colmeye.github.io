@@ -7,8 +7,7 @@ WindowSetup Class
 
 class WindowSetup
 {
-
-
+    
     constructor(_windowId)
     {
         this.window = _windowId;
@@ -23,7 +22,7 @@ class WindowSetup
         this.width = "50em";
         this.height = "25em";
 
-        // Fullscreen swapping 
+        // Fullscreen swapping
         this.fullScreen = false;
         this.lastX = 0;
         this.lastY = 0;
@@ -36,15 +35,19 @@ class WindowSetup
 
         // Containment that windows can't be dragged out of
         this.containment = "body";
+        this.containmentCenterX = 0;
+        this.containmentCenterY = 0;
         $(this.containment).css("position", "relative");
-
+        
         // Run constantly
         $( () =>
         {
             // Insert "dynamic" HTML and CSS into the window
             $(this.window).addClass("window");
             $(this.window).css("position", "absolute"); // Must add this in js because jQuery UI overwrites with position:relative
-            $(this.window).html( this.drawWindow() );
+            $(this.window).html(this.drawWindow());
+            // Center the window on load
+            this.centerWindow();            
 
             // Minimize, toggle, close
             this.titleBarFunctions();
@@ -53,7 +56,7 @@ class WindowSetup
 
 
     /*
-    Setters
+    User Setters
     --------
     */
     
@@ -154,6 +157,22 @@ class WindowSetup
     {
         $('.window').css("z-index", "1");
         $(this.window).css("z-index", "2");
+    }
+
+    // Get center of containment
+    centerWindow()
+    {
+        // Find the center of this new container
+        var $this = $(this.containment);
+        var offset = $this.offset();
+        var containerWidth = $this.width();
+        var containerHeight = $this.height();
+
+        var centerX = (offset.left + containerWidth / 2) - $(this.window).width() / 2;
+        var centerY = (offset.top + containerHeight / 2) - $(this.window).height() / 2;
+
+        $(this.window).css("left", centerX);
+        $(this.window).css("top", centerY);
     }
 
 

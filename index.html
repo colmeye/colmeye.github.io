@@ -31,6 +31,7 @@
             terminal = new Terminal("#terminal");
             terminal.setTitle("Terminal");
             terminal.setContainment("#desktop");
+            terminal.setLauncher("#terminalLauncher");
 
             test = new Window("#testwindow");
             test.setTitle("hello");
@@ -67,10 +68,10 @@
                 </div>
 
                 <div id="taskbar">
-                    <div class="taskbar-btn">
+                    <div id="#terminalLauncher" class="taskbar-btn">
                         <img src="images/icons/icon_terminal.png">
                     </div>
-                    <div class="taskbar-btn">
+                    <div id="#firefoxLauncher" class="taskbar-btn">
                         <img src="images/icons/icon_firefox.png">
                     </div>
                 </div>
@@ -78,7 +79,6 @@
                 <div id="desktop">
 
                     <!--<div id="testwindow"></div>-->
-
                     <div id='terminal'></div>
 
                 </div> <!-- /#desktop -->
@@ -88,20 +88,5 @@
 
     </body>
 
-    <script>
-        var now = new Date(Date.now());
-
-        // Get day of the week
-        var day = now.getDate();
-
-        // Get shortened month
-        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-        var month = monthNames[now.getMonth()];
-
-        // Get hours and minutes
-        var formatted = now.getHours() + ":" + now.getMinutes();
-
-        // Combine them
-        $('#date-time').html(day + '&nbsp;' + month + '&nbsp;&nbsp;&nbsp;' +formatted);
-    </script>
+    <script src="assets/js/datetime.js"></script>
 </html>
