@@ -35,6 +35,21 @@
 
             test = new Window("#testwindow");
             test.setTitle("hello");
+            test.setContent(`
+                <div class="container-fluid bg-dark text-dark">
+                    <div class="row">
+
+                    </div>
+
+                    <div class="container bg-white">
+                    
+                    <div class="row">
+                        <p>Hi</p>
+                    </row>
+
+                    </div>
+                </div>
+            `);
             test.setContainment("#desktop");
         </script>
         
@@ -78,7 +93,7 @@
 
                 <div id="desktop">
 
-                    <!--<div id="testwindow"></div>-->
+                    <div id="testwindow"></div>
                     <div id='terminal'></div>
 
                 </div> <!-- /#desktop -->

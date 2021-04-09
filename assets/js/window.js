@@ -163,10 +163,9 @@ class WindowSetup
     centerWindow()
     {
         // Find the center of this new container
-        var $this = $(this.containment);
-        var offset = $this.offset();
-        var containerWidth = $this.width();
-        var containerHeight = $this.height();
+        var offset = $(this.containment).offset();
+        var containerWidth = $(this.containment).width();
+        var containerHeight = $(this.containment).height();
 
         var centerX = (offset.left + containerWidth / 2) - $(this.window).width() / 2;
         var centerY = (offset.top + containerHeight / 2) - $(this.window).height() / 2;
@@ -201,21 +200,25 @@ class WindowSetup
             {
                 case false:
                     // FULLSCREEN
-                    // Store the size and position vars
+                    // Store the size and position vars, will activate these if window is shrunk
                     this.lastX = $(this.window).css("left");
                     this.lastY = $(this.window).css("top");
                     this.lastWidth = $(this.window).css("width");
                     this.lastHeight = $(this.window).css("height");
+
                     // Make the window fullscreen
-                    $(this.window).css("left", "0");
-                    $(this.window).css("top", "0");
-                    $(this.window).css("width", "100%");
-                    $(this.window).css("height", "100%");
-                    $(this.window).css("position", "relative");
+                    // Make window go to left and top of containement
+                    $(this.window).css("left", $(this.containment).position().left);
+                    $(this.window).css("top",  $(this.containment).position().top);
+                    // Make window grow to size of containment
+                    $(this.window).css("width", $(this.containment).width());
+                    $(this.window).css("height", $(this.containment).height());
+
                     // Remove border
                     $(this.window).css("border", "0");
                     $(this.window).css("border-radius", "0");
                     $(this.window + " .window-bar").css("border-radius", "0");
+
                     // Change this var
                     this.fullScreen = true;
                     break;
@@ -226,10 +229,12 @@ class WindowSetup
                     $(this.window).css("top", this.lastY);
                     $(this.window).css("width", this.lastWidth);
                     $(this.window).css("height", this.lastHeight);
+
                     // Add the border back
                     $(this.window).css("border", "1px solid rgb(41, 32, 35)");
                     $(this.window + " .window-bar").css("border-radius", "5px");
                     $(this.window).css("border-radius", "5px");
+                    
                     // Change this var
                     this.fullScreen = false;
                     break;
@@ -261,6 +266,7 @@ Window Class
 --------
 */
 
+// This class exists to build off of.
 class Window extends WindowSetup
 {
     constructor(_windowId)
