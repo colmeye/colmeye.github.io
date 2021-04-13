@@ -5,11 +5,36 @@ WindowSetup Class
 - Features include: Dragging, resizing, bring to front, close, minimize, full screen.
 */
 
+
 class WindowSetup
 {
     
     constructor(_windowId)
     {
+        import createMachine from 'xstate';
+        
+        // Create state machine
+        const stateMachine = createMachine({
+            initial: 'windowed',
+
+            states: {
+                windowed: {
+
+                },
+                maximized: {
+
+                },
+                minimized: {
+                    
+                },
+                closed: {
+
+                }
+            }
+        });
+        
+
+        
         this.window = _windowId;
 
         // Window content
@@ -24,8 +49,7 @@ class WindowSetup
 
         // Fullscreen swapping
         this.fullScreen = false;
-        this.lastX = 0;
-        this.lastY = 0;
+        this.lastPosition = null;
         this.lastWidth = "50em";
         this.lastHeight = "25em";
         this.transitionTime = 0.3;
@@ -137,7 +161,7 @@ class WindowSetup
     // Enable dragging and resize
     dragAndResize(_containment)
     {
-        $( this.window ).draggable({
+        $(this.window).draggable({
             containment: this.containment,
             scroll: false,
             start: () =>
@@ -201,8 +225,7 @@ class WindowSetup
                 case false:
                     // FULLSCREEN
                     // Store the size and position vars, will activate these if window is shrunk
-                    this.lastX = $(this.window).css("left");
-                    this.lastY = $(this.window).css("top");
+                    this.lastPosition = $(this.window).position();
                     this.lastWidth = $(this.window).css("width");
                     this.lastHeight = $(this.window).css("height");
 
@@ -225,8 +248,8 @@ class WindowSetup
                 case true:
                     // WINDOWED
                     // Make the window windowed and set to last pos and size
-                    $(this.window).css("left", this.lastX);
-                    $(this.window).css("top", this.lastY);
+                    $(this.window).css("left", this.lastPosition.left);
+                    $(this.window).css("top", this.lastPosition.top);
                     $(this.window).css("width", this.lastWidth);
                     $(this.window).css("height", this.lastHeight);
 

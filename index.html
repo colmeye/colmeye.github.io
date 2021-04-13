@@ -23,31 +23,42 @@
         <script src="assets/jQuery/jquery-ui-1.12.1/jquery-ui.min.js"></script>
         <link rel="stylesheet" href="assets/jQuery/jquery-ui-1.12.1/jquery-ui.min.css">
         
-        <script src="assets/js/window.js"></script>
-        <script src="assets/js/terminal.js"></script>
+        <script type="module" src="assets/js/window.js"></script>
+        <!--<script src="assets/js/terminal.js"></script>-->
         
 
         <script>
+            /*
             terminal = new Terminal("#terminal");
             terminal.setTitle("Terminal");
             terminal.setContainment("#desktop");
             terminal.setLauncher("#terminalLauncher");
+            */
 
             test = new Window("#testwindow");
-            test.setTitle("hello");
+            test.setTitle("Welcome.doc");
             test.setContent(`
-                <div class="container-fluid bg-dark text-dark">
-                    <div class="row">
+                <div class="bg-dark text-dark h-100">
 
+                    <div class="bg-info px-4 py-2 mb-4">
+                        <p class="m-0">This file is in <strong>read only</strong> mode.
                     </div>
-
-                    <div class="container bg-white">
                     
-                    <div class="row">
-                        <p>Hi</p>
-                    </row>
+                    <div class="container-fluid bg-dark text-dark">
+                        <div class="container bg-white pt-3">
+                        
+                            <div class="row">
+                                <div class="col">
+                                
+                                <h2>Welcome</h2>
+                                <hr>
+                                <p>Thank you for visiting this tech demo.</p>
 
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             `);
             test.setContainment("#desktop");
@@ -94,7 +105,7 @@
                 <div id="desktop">
 
                     <div id="testwindow"></div>
-                    <div id='terminal'></div>
+                    <!--<div id='terminal'></div>-->
 
                 </div> <!-- /#desktop -->
 
