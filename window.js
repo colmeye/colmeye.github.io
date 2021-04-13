@@ -11,8 +11,8 @@ class WindowSetup
     
     constructor(_windowId)
     {
-        import createMachine from 'xstate';
         
+        /*
         // Create state machine
         const stateMachine = createMachine({
             initial: 'windowed',
@@ -31,7 +31,7 @@ class WindowSetup
 
                 }
             }
-        });
+        });*/
         
 
         
