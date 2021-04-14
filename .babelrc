@@ -1,6 +1,0 @@
-// Allow es6 syntax with node modules!
-{   
-    "presets": [
-      "@babel/preset-env"   
-    ]
-}
