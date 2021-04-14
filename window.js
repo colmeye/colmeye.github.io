@@ -5,6 +5,8 @@ WindowSetup Class
 - Features include: Dragging, resizing, bring to front, close, minimize, full screen.
 */
 
+// Create global XState variable
+const { Machine } = XState;
 
 class WindowSetup
 {
@@ -12,9 +14,8 @@ class WindowSetup
     constructor(_windowId)
     {
         
-        /*
         // Create state machine
-        const stateMachine = createMachine({
+        const stateMachine = Machine({
             initial: 'windowed',
 
             states: {
@@ -31,9 +32,7 @@ class WindowSetup
 
                 }
             }
-        });*/
-        
-
+        });
         
         this.window = _windowId;
 
