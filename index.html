@@ -36,8 +36,10 @@
             terminal.setLauncher("#terminalLauncher");
             */
 
-            test = new Window("#testwindow");
-            test.setTitle("Welcome.doc");
+            test = new Window('#testwindow');
+            test.setTitle('Welcome.doc');
+            test.setContainment('#desktop');
+            test.setLauncher('#firefoxLauncher');
             test.setContent(`
                 <div class="bg-dark text-dark h-100">
 
@@ -62,7 +64,6 @@
 
                 </div>
             `);
-            test.setContainment("#desktop");
         </script>
         
 
@@ -95,19 +96,15 @@
                 </div>
 
                 <div id="taskbar">
-                    <div id="#terminalLauncher" class="taskbar-btn">
+                    <div id="terminalLauncher" class="taskbar-btn">
                         <img src="images/icons/icon_terminal.png">
                     </div>
-                    <div id="#firefoxLauncher" class="taskbar-btn">
+                    <div id="firefoxLauncher" class="taskbar-btn">
                         <img src="images/icons/icon_firefox.png">
                     </div>
                 </div>
 
                 <div id="desktop">
-
-                    <div id="testwindow"></div>
-                    <!--<div id='terminal'></div>-->
-
                 </div> <!-- /#desktop -->
 
             </div> <!-- /.row -->

@@ -22,7 +22,6 @@ Taskbar
 #taskbar {
     width: 5em;
     height: calc(100vh - 1.7em);
-    z-index: 100;
 
     padding: 0.5em;
 
@@ -33,7 +32,6 @@ Taskbar
 .taskbar-btn {
     width: 4em;
     height: 4em;
-    z-index: 101;
 
     display: flex;
     justify-content: center;

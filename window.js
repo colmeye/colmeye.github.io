@@ -15,6 +15,7 @@ class WindowSetup
     {
         // Define the window
         this.window = _windowId;
+
         // Window content
         this.windowTitle = "Window Title";
         this.windowContent = "Window Content";
@@ -35,7 +36,7 @@ class WindowSetup
         this.launcher = "body";
 
         // Fullscreen swapping
-        this.fullScreen = false;
+
         this.lastPosition = $(this.window).position;
         this.lastWidth = "50em";
         this.lastHeight = "25em";
@@ -46,18 +47,18 @@ class WindowSetup
         // On document ready, make things dynamic
         $( () =>
         {
-        
-            // Insert "dynamic" HTML and CSS into the window
-            $(this.window).addClass("window");
-            $(this.window).css("position", "absolute"); // Must add this in js because jQuery UI overwrites with position:relative
-            $(this.window).html(this.drawWindow());
-            // Center the window on load
-            this.centerWindow();
-
+            
             // Create state machine
             const stateMachine = Machine({
-                initial: 'open',
+                initial: 'create',
                 states: {
+
+                    // Launch and open window
+                    create: {
+                        // null event, switch to open
+                        on: {'': 'open'},
+                        entry: ['createWindow']
+                    },
 
                     // Open window state
                     open: {
@@ -70,7 +71,8 @@ class WindowSetup
                                         target: 'maximized',
                                     }
                                 },
-                                entry: ['makeWindowed']
+                                entry: ['makeWindowed'],
+                                exit: ['storeSizeAndPosition']
                             },
                             maximized: {
                                 on: {
@@ -108,22 +110,39 @@ class WindowSetup
                                 target: 'open.hist'
                             }
                         },
-                        entry: ['makeMinimized']
+                        entry: ['makeMinimized'],
+                        exit: ['undoMinimized']
                     },
 
+                    // Closed state
                     closed: {
                         on: {
                             launch: {
-                                target: 'open'
+                                target: 'create'
                             }
                         },
-                        entry: ['close']
+                        entry: ['closeWindow']
                     },
 
                 }
             },
             {
                 actions: {
+                    createWindow: (context, event) => {
+                        // Draw new window into the containment
+                        $(this.containment).html(this.drawWindow());
+                        // Change css positioning in JavaScript because jQuery UI constantly overwrites with position:relative
+                        $(this.window).css("position", "absolute");
+                        // Center the window
+                        this.centerWindow();
+                        // Enable dragging and resize
+                        this.dragAndResize();
+                    },
+                    storeSizeAndPosition: (context, event) => {
+                        this.lastPosition = $(this.window).position();
+                        this.lastWidth = $(this.window).css("width");
+                        this.lastHeight = $(this.window).css("height");
+                    },
                     makeWindowed: (context, event) => {
                         this.makeWindowed()
                     },
@@ -139,7 +158,16 @@ class WindowSetup
                         // Move to bottom
                         $(this.window).css("z-index", "0");
                     },
-                    close: (context, event) => {
+                    undoMinimized: (context, event) => {
+                        $(this.window).css("opacity", "1");
+                        $(this.window).css("height", "200");
+                        // Move to bottom
+                        $(this.window).css("z-index", "0");
+                    },
+                    closeWindow: (context, event) => {
+                        // Set transition to 0s, so new window with same name won't inheret this
+                        $(this.window).css('transition', '0s');
+                        this.centerWindow();
                         // Delete the element
                         $(this.window).remove();
                     }
@@ -170,49 +198,14 @@ class WindowSetup
             {
                 this.machineService.send('close');
             });
+
+            // Launch
+            $(this.launcher).on('click', () =>
+            {
+                this.machineService.send('launch');
+            });
+            
         });
-    }
-
-    makeMaximized()
-    {
-        $(this.window).css("transition", String(this.transitionTime) + "s");
-        setTimeout( () => { $(this.window).css("transition", "0s"); }, (this.transitionTime * 100) );
-
-        // Store the size and position vars, will activate these if window is shrunk
-        this.lastPosition = $(this.window).position();
-        this.lastWidth = $(this.window).css("width");
-        this.lastHeight = $(this.window).css("height");
-
-        // Make the window fullscreen
-        // Make window go to left and top of containement
-        $(this.window).css('left', $(this.containment).position().left);
-        $(this.window).css('top',  $(this.containment).position().top);
-        // Make window grow to size of containment
-        $(this.window).css('width', $(this.containment).width());
-        $(this.window).css('height', $(this.containment).height());
-
-        // Remove border
-        $(this.window).css("border", "0");
-        $(this.window).css("border-radius", "0");
-        $(this.window + " .window-bar").css("border-radius", "0");
-    }
-
-    makeWindowed()
-    {
-        // Up the transition speed, and reset it back to zero for smooth dragging
-        $(this.window).css('transition', String(this.transitionTime) + 's');
-        setTimeout( () => { $(this.window).css('transition', '0s'); }, (this.transitionTime * 100) );
-
-        // Make the window windowed and set to last pos and size
-        $(this.window).css('left', this.lastPosition.left);
-        $(this.window).css('top', this.lastPosition.top);
-        $(this.window).css('width', this.lastWidth);
-        $(this.window).css('height', this.lastHeight);
-
-        // Add the border back
-        $(this.window).css("border", "1px solid rgb(41, 32, 35)");
-        $(this.window + " .window-bar").css("border-radius", "5px");
-        $(this.window).css("border-radius", "5px");
     }
 
 
@@ -247,6 +240,7 @@ class WindowSetup
     setLauncher(_launcher)
     {
         this.launcher = _launcher;
+        console.log('launcher set: '+this.launcher);
     }
 
 
@@ -258,31 +252,33 @@ class WindowSetup
     drawWindow()
     {
         var _html = `
-            <!-- Window bar -->
-            <div class='window-bar'>
+            <div id='` + this.window.substring(1) + `' class='window'>
+                <!-- Window bar -->
+                <div class='window-bar'>
 
-                <div class='row h-100'>
-                    <!-- Left Placeholder/Padding -->
-                    <div class='col'>
+                    <div class='row h-100'>
+                        <!-- Left Placeholder/Padding -->
+                        <div class='col'>
 
+                        </div>
+                        <!-- Title -->
+                        <div class='col h-100 d-flex justify-content-center align-items-center'>
+                            <p>` + this.windowTitle + `</p>
+                        </div>
+                        <!-- Buttons -->
+                        <div class='col h-100 d-flex justify-content-end'>
+                            <span id='window-minimize'><i class='fas fa-minus fa-xs'></i></span>
+                            <span id='size-toggle'><i class='far fa-square fa-xs'></i></span>
+                            <span id='window-close'><i class='fas fa-times-circle' style='color: rgb(223, 74, 22);'></i></span>
+                        </div>
                     </div>
-                    <!-- Title -->
-                    <div class='col h-100 d-flex justify-content-center align-items-center'>
-                        <p>` + this.windowTitle + `</p>
-                    </div>
-                    <!-- Buttons -->
-                    <div class='col h-100 d-flex justify-content-end'>
-                        <span id='window-minimize'><i class='fas fa-minus fa-xs'></i></span>
-                        <span id='size-toggle'><i class='far fa-square fa-xs'></i></span>
-                        <span id='window-close'><i class='fas fa-times-circle' style='color: rgb(223, 74, 22);'></i></span>
-                    </div>
+
                 </div>
 
-            </div>
-
-            <!-- Window Content -->
-            <div class='window-content'>
-                ` + this.windowContent + `
+                <!-- Window Content -->
+                <div class='window-content'>
+                    ` + this.windowContent + `
+                </div>
             </div>
         `;
 
@@ -335,8 +331,43 @@ class WindowSetup
         $(this.window).css("top", centerY);
     }
 
-    
+    makeMaximized()
+    {
+        // Up the transition speed, and reset it back to zero for smooth dragging
+        $(this.window).css("transition", String(this.transitionTime) + "s");
+        setTimeout( () => { $(this.window).css("transition", "0s"); }, (this.transitionTime * 100) );
 
+        // Make the window fullscreen
+        // Make window go to left and top of containement
+        $(this.window).css('left', $(this.containment).position().left);
+        $(this.window).css('top',  $(this.containment).position().top);
+        // Make window grow to size of containment
+        $(this.window).css('width', $(this.containment).width());
+        $(this.window).css('height', $(this.containment).height());
+
+        // Remove border
+        $(this.window).css("border", "0");
+        $(this.window).css("border-radius", "0");
+        $(this.window + " .window-bar").css("border-radius", "0");
+    }
+
+    makeWindowed()
+    {
+        // Up the transition speed, and reset it back to zero for smooth dragging
+        $(this.window).css('transition', String(this.transitionTime) + 's');
+        setTimeout( () => { $(this.window).css('transition', '0s'); }, (this.transitionTime * 100) );
+
+        // Make the window windowed and set to last pos and size
+        $(this.window).css('left', this.lastPosition.left);
+        $(this.window).css('top', this.lastPosition.top);
+        $(this.window).css('width', this.lastWidth);
+        $(this.window).css('height', this.lastHeight);
+
+        // Add the border back
+        $(this.window).css("border", "1px solid rgb(41, 32, 35)");
+        $(this.window + " .window-bar").css("border-radius", "5px");
+        $(this.window).css("border-radius", "5px");
+    }
 
 }
 
