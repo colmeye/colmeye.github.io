@@ -25,6 +25,11 @@ class Window
         this.width = '50em';
         this.height = '25em';
 
+        // Window bar buttons
+        this.minimize = true;
+        this.sizeToggle = true;
+        this.close = true;
+
         // Containment that windows can't be dragged out of
         this.containment = 'body';
         $(this.containment).css('position', 'relative');
@@ -45,7 +50,6 @@ class Window
         // On document ready, make things dynamic
         $( () =>
         {
-            
             // Create state machine
             const stateMachine = Machine({
                 initial: this.initialState,
@@ -128,7 +132,7 @@ class Window
                 actions: {
                     createWindow: (context, event) => {
                         // Draw new window into the containment
-                        $(this.containment).html(this.drawWindow());
+                        $(this.containment).append(this.drawWindow());
                         $(this.window).css('width', this.width);
                         $(this.window).css('height', this.height);
                         // Change css positioning in JavaScript because jQuery UI constantly overwrites with position:relative
@@ -263,18 +267,14 @@ class Window
         $(this.window).css('transition', String(this.transitionTime) + 's');
         setTimeout( () => { $(this.window).css('transition', '0s'); }, (this.transitionTime * 100) );
 
-        // Make the window fullscreen
-        // Make window go to left and top of containement
+        // Make borderless
+        $(this.window).addClass('borderless');
+
+        // Make the window fill the containment
         $(this.window).css('left', $(this.containment).position().left);
         $(this.window).css('top',  $(this.containment).position().top);
-        // Make window grow to size of containment
         $(this.window).css('width', $(this.containment).width());
         $(this.window).css('height', $(this.containment).height());
-
-        // Remove border
-        $(this.window).css('border', '0');
-        $(this.window).css('border-radius', '0');
-        $(this.window + ' .window-bar').css('border-radius', '0');
     }
 
     makeWindowed()
@@ -282,6 +282,9 @@ class Window
         // Up the transition speed, and reset it back to zero for smooth dragging
         $(this.window).css('transition', String(this.transitionTime) + 's');
         setTimeout( () => { $(this.window).css('transition', '0s'); }, (this.transitionTime * 100) );
+
+        // Add the border back
+        $(this.window).removeClass('borderless');
 
         // Make the window windowed and set to last pos and size
         if (this.lastPosition != null)
@@ -291,11 +294,6 @@ class Window
             $(this.window).css('width', this.lastWidth);
             $(this.window).css('height', this.lastHeight);
         }
-        
-        // Add the border back
-        $(this.window).css('border', '1px solid rgb(41, 32, 35)');
-        $(this.window + ' .window-bar').css('border-radius', '5px');
-        $(this.window).css('border-radius', '5px');
     }
 
     /*
@@ -339,13 +337,34 @@ class Window
         }
     }
 
+    allowButtons(_minimizeBool, _sizeToggleBool, _closeBool)
+    {
+        // Set to false to disable any of these buttons
+        this.minimize = _minimizeBool;
+        this.sizeToggle = _sizeToggleBool;
+        this.close = _closeBool;
+    }
+
     /*
     Draw Window
     ------------
     */
 
     drawWindow()
-    {
+    {   
+        var _buttonHtml = '';
+        if (this.minimize)
+        {
+            _buttonHtml += `<span id='window-minimize'><i class='fas fa-minus fa-xs'></i></span>`;
+        }
+        if (this.sizeToggle)
+        {
+            _buttonHtml += `<span id='size-toggle'><i class='far fa-square fa-xs'></i></span>`;
+        }
+        if (this.close)
+        {
+            _buttonHtml += `<span id='window-close'><i class='fas fa-times-circle' style='color: rgb(223, 74, 22);'></i></span>`;
+        }
         var _html = `
             <div id='` + this.window.substring(1) + `' class='window'>
                 <!-- Window bar -->
@@ -361,9 +380,7 @@ class Window
                         </div>
                         <!-- Buttons -->
                         <div class='col h-100 d-flex justify-content-end'>
-                            <span id='window-minimize'><i class='fas fa-minus fa-xs'></i></span>
-                            <span id='size-toggle'><i class='far fa-square fa-xs'></i></span>
-                            <span id='window-close'><i class='fas fa-times-circle' style='color: rgb(223, 74, 22);'></i></span>
+                            ` + _buttonHtml + `
                         </div>
                     </div>
                 </div>

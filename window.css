@@ -1,6 +1,6 @@
 /*
-Window
---------
+Window CSS
+----------
 */
 
 .window {
@@ -14,10 +14,18 @@ Window
     border-radius: 5px;
 }
 
+.borderless {
+    border: 0;
+    border-radius: 0;
+}
+
+.borderless .window-bar {
+    border-radius: 0;
+}
 
 /*
 Window Bar
----------------
+----------
 The top white bar on the window including the title, close, minimize, and enlarge buttons.
 */
 
@@ -33,6 +41,16 @@ The top white bar on the window including the title, close, minimize, and enlarg
     border-radius: 5px 5px 0 0;
 }
 
+.window-bar p {
+    margin: 0;
+    margin-left: 10px;
+}
+
+/*
+Window Bar Buttons
+-------------------
+*/
+
 .window-bar span {
     display: flex;
     align-items: center;
@@ -43,12 +61,6 @@ The top white bar on the window including the title, close, minimize, and enlarg
     background: rgb(37, 37, 37);
 }
 
-.window-bar p {
-    margin: 0;
-    margin-left: 10px;
-}
-
-
 /*
 Window content
 */
@@ -58,88 +70,6 @@ Window content
     height: calc(100% - 2.5em);
     overflow-x: hidden;
 }
-
-.window pre {
-    overflow-x: hidden;
-}
-
-
-/*
-Text input
-------------
-*/
-
-#input-log {
-    /* Subtract height of INPUT AREA */
-    height: calc(100% - 1.6em);
-    overflow-y: scroll;
-    
-    margin: 0;
-    line-height: 1.3em;
-}
-
-#input-area {
-    height: 1.6em;
-}
-
-#user-input {
-    width: 90%;
-    height: 1.5em;
-    display: inline-block;
-    
-    padding: 0 0 0 0.1em;
-    margin: 0;
-
-    background: black;
-    border: 0;
-    outline: none;
-
-    color: #7edc9d;
-    text-shadow: 1px 1px 3px #7edc9d;
-}
-
-#cmd {
-    height: 1.5em;
-    width: auto;
-    display: inline-block;
-
-    margin-left: 0.3em;
-
-    background: transparent;
-    color: white;
-    padding: 0;
-    overflow: hidden;
-}
-
-#user {
-    font-weight: bold;
-    color: rgb(78, 154, 7)
-}
-
-#cmd span {
-    float: left;
-    white-space: pre;
-}
-
-/* The blinking rectangle */
-#cursor {
-    width: 0.5em;
-    height: 1.25em;
-
-    margin-left: 0.1em;
-
-    float: left;
-    background: white;
-}
-
-/* Hide the actual input */
-input {
-    width: 0;
-    height: 0;
-    
-    opacity: 0;
-}
-
 
 /*
 Custom Scrollbar
