@@ -142,6 +142,9 @@ class Window
                         // Enable dragging and resize, and listen for clicks on buttons
                         this.dragAndResize();
                         this.windowInteraction();
+
+                        // Make the launcher respond
+                        $(this.launcher).addClass('launcherOpen');
                     },
                     storeSizeAndPosition: (context, event) => {
                         this.lastPosition = $(this.window).position();
@@ -162,19 +165,33 @@ class Window
                         $(this.window).css('height', '100');
                         // Move to bottom
                         $(this.window).css('z-index', '0');
+
+                        // Make the launcher respond
+                        $(this.launcher).removeClass('launcherOpen');
+                        $(this.launcher).addClass('launcherMinimized');
                     },
                     undoMinimized: (context, event) => {
+                        // Make visible, give normal height
                         $(this.window).css('opacity', '1');
                         $(this.window).css('height', '200');
+
                         // Move to bottom
                         $(this.window).css('z-index', '0');
+
+                        // Make the launcher respond
+                        $(this.launcher).removeClass('launcherMinimized');
+                        $(this.launcher).addClass('launcherOpen');
                     },
                     closeWindow: (context, event) => {
                         this.lastPosition = null;
                         this.lastWidth = null;
                         this.lastHeight = null;
+                        
                         // Delete the element
                         $(this.window).remove();
+
+                        // Make launcher not open
+                        $(this.launcher).removeClass('launcherOpen');
                     }
                 }
             });

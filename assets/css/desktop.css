@@ -38,6 +38,8 @@ Taskbar
     align-items: center;
 
     margin-bottom: 0.5em;
+
+    transition: 100ms;
 }
 
 
@@ -50,6 +52,18 @@ Taskbar
 .taskbar-btn:hover img {
     width: 90%;
     transition: 150ms ease;
+}
+
+.launcherOpen {
+    background: rgba(255,255,255,0.2);
+    border-left: 3px solid white;
+    border-radius: 0 0.3em 0.3em 0;
+    transition: 100ms;
+}
+
+.launcherMinimized {
+    border-left: 3px solid white;
+    transition: 100ms;
 }
 
 
