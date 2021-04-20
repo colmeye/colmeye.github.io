@@ -37,7 +37,7 @@ class Window
         this.containmentCenterY = 0;
 
         // Set launcher
-        this.launcher = 'body';
+        this.launcher = '';
         this.initialState = 'create';
 
         // Fullscreen swapping
@@ -144,7 +144,7 @@ class Window
                         this.windowInteraction();
 
                         // Make the launcher respond
-                        $(this.launcher).addClass('launcherOpen');
+                        $(this.launcher).addClass('launcher-open');
                     },
                     storeSizeAndPosition: (context, event) => {
                         this.lastPosition = $(this.window).position();
@@ -167,8 +167,8 @@ class Window
                         $(this.window).css('z-index', '0');
 
                         // Make the launcher respond
-                        $(this.launcher).removeClass('launcherOpen');
-                        $(this.launcher).addClass('launcherMinimized');
+                        $(this.launcher).removeClass('launcher-open');
+                        $(this.launcher).addClass('launcher-minimized');
                     },
                     undoMinimized: (context, event) => {
                         // Make visible, give normal height
@@ -179,8 +179,8 @@ class Window
                         $(this.window).css('z-index', '0');
 
                         // Make the launcher respond
-                        $(this.launcher).removeClass('launcherMinimized');
-                        $(this.launcher).addClass('launcherOpen');
+                        $(this.launcher).removeClass('launcher-minimized');
+                        $(this.launcher).addClass('launcher-open');
                     },
                     closeWindow: (context, event) => {
                         this.lastPosition = null;
@@ -191,7 +191,7 @@ class Window
                         $(this.window).remove();
 
                         // Make launcher not open
-                        $(this.launcher).removeClass('launcherOpen');
+                        $(this.launcher).removeClass('launcher-open');
                     }
                 }
             });

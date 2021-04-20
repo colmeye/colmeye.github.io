@@ -54,14 +54,14 @@ Taskbar
     transition: 150ms ease;
 }
 
-.launcherOpen {
+.launcher-open {
     background: rgba(255,255,255,0.2);
     border-left: 3px solid white;
     border-radius: 0 0.3em 0.3em 0;
     transition: 100ms;
 }
 
-.launcherMinimized {
+.launcher-minimized {
     border-left: 3px solid white;
     transition: 100ms;
 }

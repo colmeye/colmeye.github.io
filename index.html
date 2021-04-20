@@ -27,15 +27,16 @@
         <!-- Custom JS -->
         <script src="assets/xstate/xstate.js"></script>
         <script type="text/javascript" src="window.js"></script>
-        <!--<script src="terminal.js"></script>-->
+        <script src="terminal.js"></script>
 
         <script>
-            /*
+            
             terminal = new Terminal("#terminal");
             terminal.setTitle("Terminal");
             terminal.setContainment("#desktop");
             terminal.setLauncher("#terminalLauncher");
-            */
+            terminal.startOpen(false);
+            
 
             welcomeDoc = new Window('#testwindow');
             welcomeDoc.setTitle('Welcome.doc');

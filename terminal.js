@@ -3,7 +3,7 @@ Terminal Class
 --------
 */
 
-class Terminal extends WindowSetup
+class Terminal extends Window
 {
     
     constructor(_windowId)
