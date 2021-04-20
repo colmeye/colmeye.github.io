@@ -69,7 +69,7 @@ myWindow.startOpen(true);
 
 #### Window Content
 
-Setting the window content will be vastly improved in the future and much more dynamic. Currently, this function is used to set all the content in the window. For dynamic content, I currently recommend using onclick attributes to update the content with this function. Alternatively, the class can be extended for more functionality as demonstrated in my terminal.js file. setContent() accepts one argument which should be HTML or  Using backticks is helpful for passing simple HTML into this function.
+Setting the window content will be vastly improved in the future and much more dynamic. Currently, this function is used to set all the content in the window. For dynamic content, I currently recommend using onclick attributes to update the content with this function. Alternatively, the class can be extended for more functionality as demonstrated in my terminal.js file. ``setContent()`` accepts one argument which should be HTML. Using backticks is helpful for passing simple HTML into this function.
 
 ```JavaScript
 myWindow.setContent(`
